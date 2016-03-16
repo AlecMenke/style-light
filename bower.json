@@ -1,0 +1,25 @@
+{
+  "name": "style-light",
+  "main": "style-light.js",
+  "authors": [
+    "Alec <Alec.Menke@gmail.com>"
+  ],
+  "description": "A lightweight library for css and attribute manipulation, using HTMLElement prototypes.",
+  "moduleType": [],
+  "keywords": [
+    "css",
+    "attributes",
+    "light",
+    "weight",
+    "manipulation"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
