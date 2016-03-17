@@ -48,3 +48,33 @@ var body = document.querySelectorAll('nodes').forEach(element => {
     
 });
 ```
+
+#### ajax calls:
+
+```js
+//Request({type?, url, async?, data?, contentType?})
+
+var request = new Request({
+
+    type: "GET",
+    url: "/data",
+    async: true
+});
+
+request.
+    then(data => console.log(data)).
+    catch(console.log);
+```
+
+```js
+
+Request.get("/mostWantedCriminals").
+    then(criminals => console.log("Most wanted: " + criminals[0]));
+```
+
+```js
+
+Request.post("/addNewCriminal", {name: "John Doe", reputation: "bad guy"}).
+    then(_ => console.log('added criminal').
+    catch(_ => console.log('did not add criminal');
+```
