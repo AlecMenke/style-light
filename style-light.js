@@ -86,12 +86,12 @@ Request = function({type, url, async, data, contentType}){
 
         ajaxRequest.onreadystatechange = function(){
 
-            if(ajaxRequest.status === 200)
-                if(ajaxRequest.readyState === XMLHttpRequest.DONE)
-                resolve(ajaxRequest.responseText);
-            else
-                reject(ajaxRequest.status);
-
+            if(ajaxRequest.readyState === XMLHttpRequest.DONE){
+                if(ajaxRequest.status === 200)
+                    resolve(ajaxRequest.responseText);
+                else
+                    reject(ajaxRequest.status);
+            }
         }
     });
 
