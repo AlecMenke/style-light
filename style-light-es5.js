@@ -1,8 +1,8 @@
 'use strict';
 
-var oldQuerySelectorAll =  document.querySelectorAll;
+var oldQuerySelectorAll = document.querySelectorAll;
 
-document.querySelectorAll = function(){
+document.querySelectorAll = function () {
     return Array.prototype.slice.call(oldQuerySelectorAll.apply(this, arguments));
 };
 
@@ -94,4 +94,43 @@ HTMLElement.prototype.attr = function () {
     });
 
     return this;
+};
+
+Request = function Request(_ref) {
+    var type = _ref.type;
+    var url = _ref.url;
+    var async = _ref.async;
+    var data = _ref.data;
+    var contentType = _ref.contentType;
+
+
+    var ajaxRequest = new XMLHttpRequest();
+
+    ajaxRequest.open(type || "GET", url, async || true);
+
+    if (contentType !== undefined) ajaxRequest.setRequestHeader("Content-Type", contentType);
+
+    var promise = new Promise(function (resolve, reject) {
+
+        ajaxRequest.onreadystatechange = function () {
+
+            if (ajaxRequest.readyState === XMLHttpRequest.DONE && ajaxRequest.status === 200) resolve(ajaxRequest.responseText);else reject(ajaxRequest.status);
+        };
+    });
+    ajaxRequest.send(data);
+
+    return promise;
+};
+
+Request.json = function (url, data) {
+
+    var settings = {
+        type: 'POST',
+        url: url,
+        data: data
+    };
+
+    if (data instanceof Object) settings.contentType = 'application/json';
+
+    return Request(settings);
 };
