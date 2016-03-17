@@ -86,7 +86,7 @@ Request = function({type, url, async, data, contentType}){
 
         ajaxRequest.onreadystatechange = function(){
 
-            if(ajaxRequest.readyState === XMLHttpRequest.DONE && ajaxRequest.status === 200)
+            if(ajaxRequest.readyState === XMLHttpRequest.DONE)
                 resolve(ajaxRequest.responseText);
             else
                 reject(ajaxRequest.status);
