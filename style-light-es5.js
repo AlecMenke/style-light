@@ -112,7 +112,7 @@ Request = function Request(_ref) {
 
         ajaxRequest.onreadystatechange = function () {
 
-            if (ajaxRequest.readyState === XMLHttpRequest.DONE) resolve(ajaxRequest.responseText);else reject(ajaxRequest.status);
+            if (ajaxRequest.status === 200) if (ajaxRequest.readyState === XMLHttpRequest.DONE) resolve(ajaxRequest.responseText);else reject(ajaxRequest.status);
         };
     });
 
