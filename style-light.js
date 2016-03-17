@@ -75,3 +75,43 @@ HTMLElement.prototype.attr = function(){
 
     return this;
 };
+
+Request = function({type, url, async, data, contentType}){
+
+    var ajaxRequest = new XMLHttpRequest();
+
+    ajaxRequest.open(type || "GET", url, async || true);
+
+    if(contentType !== undefined)
+        ajaxRequest.setRequestHeader("Content-Type", contentType);
+
+    var promise = new Promise((resolve, reject) => {
+
+        ajaxRequest.onreadystatechange = function(){
+
+            if(ajaxRequest.readyState === XMLHttpRequest.DONE && ajaxRequest.status === 200)
+                resolve(ajaxRequest.responseText);
+            else
+                reject(ajaxRequest.status);
+
+        }
+    });
+    ajaxRequest.send(data);
+
+    return promise;
+};
+
+
+Request.json = function(url, data){
+
+    const settings = {
+        type: 'POST',
+        url,
+        data
+    };
+
+    if(data instanceof Object)
+        settings.contentType = 'application/json';
+
+    return Request(settings);
+};
