@@ -82,9 +82,6 @@ Request = function({type, url, async, data, contentType}){
 
     ajaxRequest.open(type || "GET", url, async || true);
 
-    if(contentType !== undefined)
-        ajaxRequest.setRequestHeader("Content-Type", contentType);
-
     var promise = new Promise((resolve, reject) => {
 
         ajaxRequest.onreadystatechange = function(){
@@ -96,6 +93,12 @@ Request = function({type, url, async, data, contentType}){
 
         }
     });
+
+    if(contentType !== undefined){
+        ajaxRequest.setRequestHeader("Content-Type", contentType);
+
+        ajaxRequest.send(JSON.stringify(data));
+    }else
     ajaxRequest.send(data);
 
     return promise;

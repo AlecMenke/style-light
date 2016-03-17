@@ -108,8 +108,6 @@ Request = function Request(_ref) {
 
     ajaxRequest.open(type || "GET", url, async || true);
 
-    if (contentType !== undefined) ajaxRequest.setRequestHeader("Content-Type", contentType);
-
     var promise = new Promise(function (resolve, reject) {
 
         ajaxRequest.onreadystatechange = function () {
@@ -117,7 +115,12 @@ Request = function Request(_ref) {
             if (ajaxRequest.readyState === XMLHttpRequest.DONE && ajaxRequest.status === 200) resolve(ajaxRequest.responseText);else reject(ajaxRequest.status);
         };
     });
-    ajaxRequest.send(data);
+
+    if (contentType !== undefined) {
+        ajaxRequest.setRequestHeader("Content-Type", contentType);
+
+        ajaxRequest.send(JSON.stringify(data));
+    } else ajaxRequest.send(data);
 
     return promise;
 };
