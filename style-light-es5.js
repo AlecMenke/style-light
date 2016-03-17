@@ -96,7 +96,17 @@ HTMLElement.prototype.attr = function () {
     return this;
 };
 
-Request = function Request(_ref) {
+Request = function (_Request) {
+    function Request(_x) {
+        return _Request.apply(this, arguments);
+    }
+
+    Request.toString = function () {
+        return _Request.toString();
+    };
+
+    return Request;
+}(function (_ref) {
     var type = _ref.type;
     var url = _ref.url;
     var async = _ref.async;
@@ -113,7 +123,7 @@ Request = function Request(_ref) {
         ajaxRequest.onreadystatechange = function () {
 
             if (ajaxRequest.readyState === XMLHttpRequest.DONE) {
-                if (ajaxRequest.status === 200) resolve(ajaxRequest.responseText);else reject(ajaxRequest.status);
+                if (ajaxRequest.status === 200) resolve(Request.autoConvertJson(ajaxRequest.responseText));else reject(ajaxRequest.status);
             }
         };
     });
@@ -125,6 +135,19 @@ Request = function Request(_ref) {
     } else ajaxRequest.send(data);
 
     return promise;
+});
+
+Request.autoConvertJson = function (string) {
+
+    if (string[0] === '{' || string[0] === '[') {
+
+        try {
+            var output = JSON.parse(string);
+            return output;
+        } catch (e) {}
+    }
+
+    return string;
 };
 
 Request.json = function (url, data) {

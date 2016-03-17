@@ -88,7 +88,7 @@ Request = function({type, url, async, data, contentType}){
 
             if(ajaxRequest.readyState === XMLHttpRequest.DONE){
                 if(ajaxRequest.status === 200)
-                    resolve(ajaxRequest.responseText);
+                    resolve(Request.autoConvertJson(ajaxRequest.responseText));
                 else
                     reject(ajaxRequest.status);
             }
@@ -105,6 +105,19 @@ Request = function({type, url, async, data, contentType}){
     return promise;
 };
 
+Request.autoConvertJson = function(string){
+
+
+    if(string[0] === '{' || string[0] === '['){
+
+        try{
+            const output = JSON.parse(string);
+            return output;
+        }catch(e){}
+    }
+
+    return string;
+};
 
 Request.json = function(url, data){
 
