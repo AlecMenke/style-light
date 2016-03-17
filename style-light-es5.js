@@ -150,7 +150,17 @@ Request.autoConvertJson = function (string) {
     return string;
 };
 
-Request.json = function (url, data) {
+Request.get = function(url){
+
+    const settings = {
+        type: 'GET',
+        url: url
+    };
+
+    return Request(settings);
+};
+
+Request.post = function (url, data) {
 
     var settings = {
         type: 'POST',
